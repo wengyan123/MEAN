@@ -1,0 +1,57 @@
+<!DECOTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body ng-app='app'>
+  <div ng-controller='PostsCtrl' class="container">
+    <h1>Recent Posts</h1>
+    <form role="form">
+      <div class="form-group">
+        <div class="input-group">
+          <input ng-model='postBody' class="form-control" />
+          <span class="input-group-btn">
+           <button ng-click='addPost()' class="btn btn-default">
+           Add Post</button>
+         </span>
+       </div>
+      </div>
+    </form>
+    <ul class="list-group">
+      <li ng-repeat='post in posts' class='list-group-item'>
+        <strong>@{{ post.username}}</strong>
+        <span>{{ post.body }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script>
+  //create our app module
+  var app = angular.module('app', [])
+
+  //create the PostsCtrl module
+  //dependecy inject $scope
+  app.controller('PostsCtrl', function ($scope){
+   //the function runs when the "Add Post" button is clicked
+   $scope.addPost = function(){
+     //only add a post if there is a body
+     if($scope.postBody){
+       //unshift a new post into $scope.posts
+       $scope.posts.unshift({
+         username: 'dickeyxxx',
+         body: $scope.postBody // use the text entered
+       })
+       //clear out the input field
+       $scope.postBody = null
+     }
+   }
+   $http.get('http://localhost:3000/api/posts')
+   .success(function(posts){
+     $scope.posts = posts
+   })
+})
+  </script>
+</body>
+</html>
+
