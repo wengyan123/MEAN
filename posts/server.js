@@ -14,6 +14,10 @@ app.get('/api/posts', function(req, res, next){
 })
 })
 
+app.get('/', function (req, res){
+    res.sendfile('layouts/posts.html')
+})
+
 //POST request
 app.post('/api/posts', function(req,res,next){
 var post = new Post({
