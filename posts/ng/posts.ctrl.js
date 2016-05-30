@@ -4,7 +4,7 @@ angular.module('app')
  $scope.addPost = function(){
    //only add a post if there is a body
    if($scope.postBody){
-     PostScv.create({
+     PostSvc.create({
        username: 'dickeyxxx',
        body:     $scope.postBody
      })
@@ -14,7 +14,15 @@ angular.module('app')
      })
    }
  }
+ 
+ $scope.$on('ws:new_post', function(_, post){
+   $scope.$apply(function(){
+      $scope.posts.unshift(post)
+   })
+})
+   
 
+ 
  PostSvc.fetch()
  .success(function (posts){
    $scope.posts = posts

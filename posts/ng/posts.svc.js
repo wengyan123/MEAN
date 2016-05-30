@@ -3,7 +3,7 @@ angular.module('app')
    this.fetch = function(){
         return $http.get('/api/posts')
    }
-   this.create = function(){
+   this.create = function(post){
         return $http.post('/api/posts', post)
    }
 })
